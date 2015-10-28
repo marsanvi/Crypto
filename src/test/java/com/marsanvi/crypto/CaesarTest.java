@@ -26,7 +26,7 @@ public class CaesarTest {
 	}
 	
 	@Test
-	public void simpleEncode() {
+	public void simpleEncode() { 
 		String text = "hello";
 		String encoded = caesarService.encode(text,1);
 		assertEquals("ifmmp", encoded);
