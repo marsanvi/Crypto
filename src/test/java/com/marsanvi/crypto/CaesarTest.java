@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CaesarTest {
 	
+	private final static String latinAlphabet = "abcdefghijklmnopqrstuvwxyz"; 
+	
 	@Autowired
 	CaesarService caesarService;
 
@@ -21,7 +23,7 @@ public class CaesarTest {
 	static class ConfigurationTest {
 		@Bean
 		public CaesarService caesarService() {
-			return new CaesarService();
+			return new CaesarService(latinAlphabet);
 		}
 	}
 	
