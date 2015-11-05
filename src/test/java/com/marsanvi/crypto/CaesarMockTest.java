@@ -29,6 +29,7 @@ public class CaesarMockTest {
 
 	private final static String TEST_STRING = "abcdef";
 	private final static String TEST_RESULT = "bcdefg";
+	private final static String defaultAlphabet = "abcdefghijklmnopqrstuvwxyz";
 
 	@Mock
 	CaesarController caesarController;
@@ -36,27 +37,24 @@ public class CaesarMockTest {
 	@InjectMocks
 	private CaesarService caesarService;
 
-	 @Test
-	 public void testWithTestString() {
-	 assertEquals(TEST_RESULT, caesarService.encode(TEST_STRING, 1));
-	 }
-	
-	 @Test
-	 public void testService() throws IOException {
-	
-	 CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-	
-	 HttpGet request = new
-	 HttpGet("http://localhost:8080/caesar/encode?text=hola&swift=2");
-	
-	 CloseableHttpResponse httpResponse = httpClient.execute(request);
-	
-	 assertEquals(HttpStatus.SC_OK,
-	 httpResponse.getStatusLine().getStatusCode());
-	
-	 assertEquals("jqnc", httpResponse.getEntity().getContent().toString());
-	 }
+	@Test
+	public void testWithTestString() {
+		assertEquals(TEST_RESULT, caesarService.encode(defaultAlphabet, TEST_STRING, 1));
+	}
 
+	@Test
+	public void testService() throws IOException {
 
+		CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+		HttpGet request = new HttpGet(
+				"http://localhost:8080/caesar/encode?defaultAlphabet=abcdefghijklmnopqrstuvwxyz&text=hola&swift=2");
+
+		CloseableHttpResponse httpResponse = httpClient.execute(request);
+
+		assertEquals(HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
+
+		assertEquals("jqnc", httpResponse.getEntity().getContent().toString());
+	}
 
 }

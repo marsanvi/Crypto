@@ -13,12 +13,12 @@ public class CaesarController {
 	CaesarService caesarService;
 
 	@RequestMapping("/caesar/encode")
-	public @ResponseBody String encode(@RequestParam(value = "text") String text, @RequestParam(value = "swift") int swift) {
-		return caesarService.encode(text, swift);
+	public @ResponseBody String encode(@RequestParam(value = "alphabet") String alphabet,@RequestParam(value = "text") String text, @RequestParam(value = "swift") int swift) {
+		return caesarService.encode(alphabet,text, swift);
 	}
 
 	@RequestMapping("/caesar/decode")
-	public @ResponseBody String decode(@RequestParam(value = "text") String text, @RequestParam(value = "swift") int swift) {
-		return caesarService.decode(text, swift);
+	public @ResponseBody String decode(@RequestParam(value = "alphabet") String alphabet,@RequestParam(value = "text") String text, @RequestParam(value = "swift") int swift) {
+		return caesarService.decode(alphabet,text, swift);
 	}
 }
