@@ -1,2 +1,2 @@
 # crypto
-Classic cryptography 
+Classical cipher using Spring-Boots and Angularjs
