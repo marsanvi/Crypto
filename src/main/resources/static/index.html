@@ -12,73 +12,50 @@
 			<h1>Caesar</h1>
 			<p>
 				This is a web where you can encode and decode with classic mehtode <a
-					href="https://en.wikipedia.org/wiki/Caesar_cipher"> Caesar cipher</a>
+					href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank"> Caesar cipher</a>
 			</p>
 		</div>
 
-
 		<div ng-controller="CaesarController as caesar">
-
-
-			
-				<div class="form-group">
-					<label for="alphabet">Alphabet</label>
-					<div ng-init="alphabet = 'Latin (abcdefghijklmnopqrstuvwxyz)'" required>
-						<select ng-model="caesar.alphabet" class="form-control" id="alphabet">
-							<option value="abcdefghijklmnopqrstuvwxyz">Latin (abcdefghijklmnopqrstuvwxyz)</option>
-							<option value="abcdefghijklmnñopqrstuvwxyz">Spanish (abcdefghijklmnñopqrstuvwxyz)</option>
-							<option value="abcdefghijklmnñopqrstuvwxyz">German (aäbßcdefghijklmnñoöpqrstuüvwxyz)</option>
-						</select>
-					</div>
-
-				</div>
-				<div class="form-group">
-					<label for="text">Text:</label>
-					<textarea ng-model="caesar.text" class="form-control" id="text" placeholder="Text" required> </textarea>
-				</div>
-				
-				<div class="form-group">
-					<label for="swift">Swift</label> <input type="number" ng-model="caesar.swift" class="form-control" min="0"
-						required>
-				</div>
-				<input type="button" ng-click="caesar.encode()" class="btn btn-default" value="Encode"></input>
-			
-<br>
+		<form  name="caesarForm">
 			<div class="form-group">
-				<label for="encoded">result</label> 
-				<textarea ng-model="caesar.encoded" class="form-control" id="encoded"  required> </textarea>
+				<label for="alphabet">Alphabet</label>
+				<div ng-init="alphabet = 'Latin (abcdefghijklmnopqrstuvwxyz)'" required>
+					<select ng-model="caesar.alphabet" class="form-control" id="alphabet">
+						<option value="abcdefghijklmnopqrstuvwxyz">Latin (abcdefghijklmnopqrstuvwxyz)</option>
+						<option value="abcdefghijklmnñopqrstuvwxyz">Spanish (abcdefghijklmnñopqrstuvwxyz)</option>
+						<option value="abcdefghijklmnñopqrstuvwxyz">German (aäbßcdefghijklmnñoöpqrstuüvwxyz)</option>
+					</select>
+				</div>
+
+			</div>
+			
+			<div class="form-group">
+				<label for="text">Text:</label>
+				<textarea ng-model="caesar.text" class="form-control" id="text" placeholder="Text" required> </textarea>
+			</div>
+			
+			<div class="form-group">
+				<label for="swift">Swift</label> <input type="number" ng-model="caesar.swift" class="form-control" min="0" required>
+			</div>
+			
+			<div class="form-group">
+				<button ng-click="caesar.encode()" class="btn btn-default" ng-disabled="caesarForm.$invalid">Encode</button> 
+				<button ng-click="caesar.decode()" class="btn btn-default" ng-disabled="caesarForm.$invalid">Decode</button>
 			</div>
 
-
-
-
+			<div class="form-group">
+				<label for="encoded">Result</label>
+				<textarea ng-model="caesar.result" class="form-control" id="result" > </textarea>
+			</div>
 			
+		</form>
 		</div>
+		
 	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
-	<script>
-		angular.module('cryptoApp', []).controller(
-				'CaesarController',
-				[
-						'$http',
-						function($http) {
-							var self = this;
-
-							self.encode = function() {
-								console.log('before call');
-								var url = '/caesar/encode?' + 'alphabet='
-										+ self.alphabet + '&text=' + self.text
-										+ '&swift=' + self.swift;
-								$http.get(url).then(function(response) {
-									console.log(response.data);
-									self.encoded = response.data;
-								}, function(errResponse) {
-									console.error('Error while trying encode');
-								});
-							};
-
-						} ]);
-	</script>
+	<script src="/js/app.js"></script>
+		
 </body>
 </html>
