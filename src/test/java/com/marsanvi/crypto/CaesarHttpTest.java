@@ -2,16 +2,15 @@ package com.marsanvi.crypto;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -19,56 +18,40 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class CaesarHttpTest {
 
-	private final static String TEST_STRING = "abcdef";
-	private final static String TEST_RESULT = "bcdefg";
-	private final static String TEST_SWIFT = "1";
-
-	@Test
-	public void httpRequestEncode() throws ClientProtocolException, IOException {
-		String url = "http://localhost:8080/caesar/encode?text=" + TEST_STRING + "&swift=" + TEST_SWIFT;
-
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(url);
-
-		HttpResponse response = client.execute(request);
-
-		System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
-
-		assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
-
-		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-		System.out.println(result.toString());
-		assertEquals(TEST_RESULT, result.toString());
-
+	private CloseableHttpClient httpClient;
+	private HttpGet request;
+	private CloseableHttpResponse httpResponse;
+	private String content;
+	
+	@Before
+	public void setup() {
+		httpClient = HttpClientBuilder.create().build();
 	}
 	
 	@Test
-	public void httpRequestDecode() throws ClientProtocolException, IOException {
-		String url = "http://localhost:8080/caesar/decode?text=" + TEST_RESULT + "&swift=" + TEST_SWIFT;
+	public void testHttpRequestEncode() throws IOException {
 
-		HttpClient client = HttpClientBuilder.create().build();
-		HttpGet request = new HttpGet(url);
+		request = new HttpGet(
+				"http://localhost:8080/caesar/encode?alphabet=abcdefghijklmnopqrstuvwxyz&text=hola&swift=1");
 
-		HttpResponse response = client.execute(request);
+		httpResponse = httpClient.execute(request);
+		assertEquals(HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
 
+		content = EntityUtils.toString(httpResponse.getEntity());
+		assertEquals("ipmb", content);
+	}
 
-		assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
+	@Test
+	public void testHttpRequestDecode() throws IOException {
 
-		BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		request = new HttpGet(
+				"http://localhost:8080/caesar/decode?alphabet=abcdefghijklmnopqrstuvwxyz&text=ipmb&swift=1");
 
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-		assertEquals(TEST_STRING, result.toString());
+		httpResponse = httpClient.execute(request);
+		assertEquals(HttpStatus.SC_OK, httpResponse.getStatusLine().getStatusCode());
 
+		content = EntityUtils.toString(httpResponse.getEntity());
+		assertEquals("hola", content);
 	}
 
 }
