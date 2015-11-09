@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CaesarTest {
+public class CaesarServiceTest {
 	
 	private final static String defaultAlphabet = "abcdefghijklmnopqrstuvwxyz";
 	private final static String spanishtAlphabet = "abcdefghijklmnñopqrstuvwxyz";
