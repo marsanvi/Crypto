@@ -28,8 +28,6 @@ public class CaesarServiceTest {
 		}
 	}
 	
-	
-	
 	@Test
 	public void simpleEncode() { 
 		String text = "hello";

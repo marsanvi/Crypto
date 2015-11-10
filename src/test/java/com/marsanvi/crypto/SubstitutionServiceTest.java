@@ -10,12 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.marsanvi.crypto.exceptions.InvalidCipherException;
+
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class SubstitutionServiceTest {
 	
 	private final static String defaultAlphabet =       "abcdefghijklmnopqrstuvwxyz";
 	private final static String defaultAlphabetCipher = "cipherstuvwxyzabdfgjklmnoq";
+	private final static String spanishtAlphabetCipher = "cipherstuvwxyzabñdfgjklmnoq";
 	
 	@Autowired
 	SubstitutionService subtitutionService;
@@ -29,17 +32,82 @@ public class SubstitutionServiceTest {
 	}
 	
 	@Test
-	public void simpleEncode() { 
+	public void simpleEncode() throws InvalidCipherException{ 
 		String text = "hello";
 		String encoded = subtitutionService.encode(defaultAlphabet,defaultAlphabetCipher,text);
 		assertEquals("texxa", encoded);
 	}
 	
 	@Test
-	public void simpleDecode() { 
+	public void simpleDecode() throws InvalidCipherException{ 
 		String text = "texxa";
 		String encoded = subtitutionService.decode(defaultAlphabet,defaultAlphabetCipher,text);
 		assertEquals("hello", encoded);
 	}
+	
+	@Test
+	public void encodeVoid() throws InvalidCipherException{ 
+		String text = "";
+		String encoded = subtitutionService.encode(defaultAlphabet,defaultAlphabetCipher,text);
+		assertEquals("", encoded);
+	}
+	
+	@Test
+	public void decodeVoid() throws InvalidCipherException{ 
+		String text = "";
+		String encoded = subtitutionService.decode(defaultAlphabet,defaultAlphabetCipher,text);
+		assertEquals("", encoded);
+	}
+	
+	@Test
+	public void encodeSameAlphabet() throws InvalidCipherException { 
+		String text = "hello";
+		String encoded = subtitutionService.encode(defaultAlphabet,defaultAlphabet,text);
+		assertEquals("hello", encoded);
+	}
+	
+	@Test
+	public void decodeSameAlphabet() throws InvalidCipherException{ 
+		String text = "texxa";
+		String encoded = subtitutionService.decode(defaultAlphabet,defaultAlphabet,text);
+		assertEquals("texxa", encoded);
+	}
+	
+	@Test
+	public void encodeCaseSensitive()throws InvalidCipherException { 
+		String text = "Hello";
+		String encoded = subtitutionService.encode(defaultAlphabet,defaultAlphabetCipher,text);
+		assertEquals("texxa", encoded);
+	}
+	
+	@Test
+	public void decodeCaseSensitive() throws InvalidCipherException{ 
+		String text = "tExXa";
+		String encoded = subtitutionService.decode(defaultAlphabet,defaultAlphabetCipher,text);
+		assertEquals("hello", encoded);
+	}
+	
+	@Test
+	public void encodeWhiteSpaces() throws InvalidCipherException { 
+		String text = "hello sam";
+		String encoded = subtitutionService.encode(defaultAlphabet,defaultAlphabetCipher,text);
+		assertEquals("texxa gcy", encoded);
+	}
+	
+	@Test(expected = InvalidCipherException.class)
+	public void endoceWithInvalidCipherLengh() throws InvalidCipherException{
+		String text = "hello";
+		subtitutionService.encode(defaultAlphabet,spanishtAlphabetCipher,text);
+	}
+	
+	@Test(expected = InvalidCipherException.class)
+	public void dedoceWithInvalidCipherLengh() throws InvalidCipherException{
+		String text = "texxa";
+		subtitutionService.decode(defaultAlphabet,spanishtAlphabetCipher,text);
+	}
+	
+	
+	
+	
 	
 }
