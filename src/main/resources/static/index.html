@@ -1,61 +1,36 @@
-
 <!doctype html>
-<html ng-app="cryptoApp">
+<html >
 <head>
 <link rel="stylesheet" href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/controllers.js"></script>
 </head>
-<body>
+<body ng-app="cryptoApp">
 	<div class="container theme-showcase" role="main">
 
-		<div class="jumbotron">
-			<h1>Caesar</h1>
-			<p>
-				This is a web where you can encode and decode with classic mehtode <a
-					href="https://en.wikipedia.org/wiki/Caesar_cipher" target="_blank"> Caesar cipher</a>
-			</p>
-		</div>
 
-		<div ng-controller="CaesarController as caesar">
-		<form  name="caesarForm">
-			<div class="form-group">
-				<label for="alphabet">Alphabet</label>
-				<div ng-init="alphabet = 'Latin (abcdefghijklmnopqrstuvwxyz)'" required>
-					<select ng-model="caesar.alphabet" class="form-control" id="alphabet">
-						<option value="abcdefghijklmnopqrstuvwxyz">Latin (abcdefghijklmnopqrstuvwxyz)</option>
-						<option value="abcdefghijklmnñopqrstuvwxyz">Spanish (abcdefghijklmnñopqrstuvwxyz)</option>
-						<option value="abcdefghijklmnñopqrstuvwxyz">German (aäbßcdefghijklmnñoöpqrstuüvwxyz)</option>
-					</select>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-3 col-md-2 ">
+					<ul class="nav nav-sidebar">
+						<li class="active"><a href="#/">Home <span class="sr-only">(current)</span></a></li>
+						<li><a href="#/caesar">Caesar</a></li>
+						<li><a href="#/substitution">Substitution</a></li>
+					</ul>
+
 				</div>
-
+				<div class="col-sm-9  col-md-10  ">
+					<div ng-view></div>
+					
+				</div>
 			</div>
-			
-			<div class="form-group">
-				<label for="text">Text:</label>
-				<textarea ng-model="caesar.text" class="form-control" id="text" placeholder="Text" required> </textarea>
-			</div>
-			
-			<div class="form-group">
-				<label for="swift">Swift</label> <input type="number" ng-model="caesar.swift" class="form-control" min="0" required>
-			</div>
-			
-			<div class="form-group">
-				<button ng-click="caesar.encode()" class="btn btn-default" ng-disabled="caesarForm.$invalid">Encode</button> 
-				<button ng-click="caesar.decode()" class="btn btn-default" ng-disabled="caesarForm.$invalid">Decode</button>
-			</div>
-
-			<div class="form-group">
-				<label for="encoded">Result</label>
-				<textarea ng-model="caesar.result" class="form-control" id="result" > </textarea>
-			</div>
-			
-		</form>
 		</div>
-		
-	</div>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
-	<script src="/js/app.js"></script>
-		
+	</div>
+	
+
 </body>
 </html>

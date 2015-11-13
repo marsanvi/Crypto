@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.marsanvi.crypto.services.CaesarService;
+
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CaesarServiceTest {

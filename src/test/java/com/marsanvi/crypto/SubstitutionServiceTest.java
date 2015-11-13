@@ -1,6 +1,10 @@
 package com.marsanvi.crypto;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Arrays;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.marsanvi.crypto.exceptions.InvalidCipherException;
+import com.marsanvi.crypto.services.SubstitutionService;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -106,7 +111,17 @@ public class SubstitutionServiceTest {
 		subtitutionService.decode(defaultAlphabet,spanishtAlphabetCipher,text);
 	}
 	
-	
+	@Test
+	public void validRandomAlphabet(){
+		String randomAlphabet = subtitutionService.generateRandomAlphabet(defaultAlphabet);
+		char[] chars1 = defaultAlphabet.toCharArray();
+		char[] chars2 = randomAlphabet.toCharArray();
+		Arrays.sort(chars1);
+		Arrays.sort(chars2);
+		System.out.println(randomAlphabet);
+		assertFalse(randomAlphabet.equals(defaultAlphabet));
+		assertTrue(Arrays.equals(chars1, chars2));
+	}
 	
 	
 	

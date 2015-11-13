@@ -9,30 +9,34 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.marsanvi.crypto.controllers.CaesarController;
+import com.marsanvi.crypto.controllers.SubstitutionController;
 
 @RunWith(MockitoJUnitRunner.class)
 @WebAppConfiguration
 @ContextConfiguration
-public class CaesarMockTest {
+public class SubstitutionMockTest {
 
-	private final static String TEST_STRING = "abcdef";
-	private final static String TEST_RESULT = "bcdefg";
+	private final static String TEST_STRING = "hello";
+	private final static String TEST_RESULT = "texxa";
 	private final static String defaultAlphabet = "abcdefghijklmnopqrstuvwxyz";
+	private final static String defaultAlphabetCipher = "cipherstuvwxyzabdfgjklmnoq";
 
 	@Mock
-	CaesarController caesarController;
+	SubstitutionController substitutionController;
+
 
 	@Test
 	public void testCaesarControlerEncode() {
-		when(caesarController.encode(defaultAlphabet, TEST_STRING, 1)).
+		when(substitutionController.encode(defaultAlphabet,defaultAlphabetCipher, TEST_STRING)).
 		thenReturn(TEST_RESULT);
 	}
 	
 	@Test
 	public void testCaesarControlerDecode() {
-		when(caesarController.decode(defaultAlphabet, TEST_RESULT, 1)).
+		when(substitutionController.decode(defaultAlphabet,defaultAlphabetCipher, TEST_RESULT)).
 		thenReturn(TEST_STRING);
 	}
+	
+	
 
 }
