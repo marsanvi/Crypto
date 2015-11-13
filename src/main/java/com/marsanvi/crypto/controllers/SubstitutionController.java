@@ -15,7 +15,7 @@ public class SubstitutionController {
 	@Autowired
 	SubstitutionService substitutionService;
 
-	@RequestMapping("/caesar/encode")
+	@RequestMapping("/substitution/encode")
 	public @ResponseBody String encode(@RequestParam(value = "alphabet") String alphabet,
 			@RequestParam(value = "cipher") String cipher, @RequestParam(value = "text") String text) {
 		try {
@@ -26,7 +26,7 @@ public class SubstitutionController {
 		}
 	}
 
-	@RequestMapping("/caesar/decode")
+	@RequestMapping("/substitutionr/decode")
 	public @ResponseBody String decode(@RequestParam(value = "alphabet") String alphabet,
 			@RequestParam(value = "cipher") String cipher, @RequestParam(value = "text") String text) {
 		try {
