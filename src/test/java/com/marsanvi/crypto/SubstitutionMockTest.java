@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
+import static org.mockito.Matchers.anyString; 
 
 import com.marsanvi.crypto.controllers.SubstitutionController;
 
@@ -37,6 +38,10 @@ public class SubstitutionMockTest {
 		thenReturn(TEST_STRING);
 	}
 	
+	@Test 
+	public void testSubstitutionControllerGenerateRandomCipher() {
+		when(substitutionController.generateRandomAlphabet(defaultAlphabet)).thenReturn(anyString());
+	}
 	
 
 }

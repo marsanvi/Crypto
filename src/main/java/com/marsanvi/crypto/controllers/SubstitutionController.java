@@ -26,7 +26,7 @@ public class SubstitutionController {
 		}
 	}
 
-	@RequestMapping("/substitutionr/decode")
+	@RequestMapping("/substitution/decode")
 	public @ResponseBody String decode(@RequestParam(value = "alphabet") String alphabet,
 			@RequestParam(value = "cipher") String cipher, @RequestParam(value = "text") String text) {
 		try {
@@ -35,5 +35,10 @@ public class SubstitutionController {
 			e.printStackTrace();
 			return "error";
 		}
+	}
+	
+	@RequestMapping("/substitution/generateRandomAlphabet")
+	public @ResponseBody String generateRandomAlphabet (@RequestParam(value="alphabet") String alphabet) {
+		return substitutionService.generateRandomAlphabet(alphabet);
 	}
 }
